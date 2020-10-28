@@ -21,7 +21,7 @@ class db_manager:
         exit = False
         while not exit:
             choice = int(input(
-                "1. Register\n2. Login\n3. Edit\n4. Delete\n5. Show all users\n6. Search by name\n0. Exit\n==> "))
+                "1. Register\n2. Login\n3. Edit\n4. Delete\n5. Show all users\n6. Search by email\n0. Exit\n==> "))
             if choice == 1:
                 answer = self.__register()
                 print(answer)
@@ -38,7 +38,7 @@ class db_manager:
                 answer = self.__show_all()
                 print(answer)
             elif choice == 6:
-                answer = self.__show_name()
+                answer = self.__show_email()
                 print(answer)
             elif choice == 0:
                 exit = True
@@ -125,16 +125,16 @@ class db_manager:
         else:
             return "No data!"
 
-    def __show_name(self):
-        username = input("Enter username: ")
+    def __show_email(self):
+        email = input("Enter email: ")
 
         self.__cursor.execute(
-            f"SELECT username, email FROM users WHERE username = '{username}'")
+            f"SELECT username, email FROM users WHERE email = '{email}'")
         result = self.__cursor.fetchall()
         if result != []:
             print('Username'.center(20, '='), 'Email'.center(20, '='), sep='|')
             for username, email in result:
                 print("%20s%20s" % (username, email))
-            return f"All users with username: {username}!"
+            return f"User with email: {email}!"
         else:
             return "No data."
